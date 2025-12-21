@@ -13,16 +13,10 @@ Task Tracker is a professional, lightweight Command Line Interface (CLI) task tr
 
 ## Installation
 
-### Recommended (Via Go)
 Install the binary directly to your Go bin folder:
 ```bash
 go install github.com/pramudya3/task-cli/cmd/task@latest
 ```
-
-### Manual Download
-1. Go to the [Releases](https://github.com/pramudya3/task-tracker-cli/releases) page.
-2. Download the archive for your OS (`.tar.gz` for macOS/Linux, `.zip` for Windows).
-3. Extract and move the `task` (or `task.exe`) binary to any folder in your System PATH (e.g., `~/go/bin`).
 
 ---
 
