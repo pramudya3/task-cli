@@ -48,4 +48,4 @@ changelog:
 release:
   github:
     owner: pramudya3
-    name: task-tracker-cli
+    name: task-cli
