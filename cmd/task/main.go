@@ -78,6 +78,16 @@ var removeCmd = &cobra.Command{
 	Short: "Remove a task by ID",
 	Args:  cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
+		fmt.Print("Are you sure you want to remove this task? (y/n): ")
+		var response string
+		fmt.Scanln(&response)
+
+		response = strings.ToLower(strings.TrimSpace(response))
+		if response != "y" && response != "yes" {
+			fmt.Println("Remove cancelled.")
+			return nil
+		}
+
 		task, err := taskTracker.Remove(args[0])
 		if err != nil {
 			return err
@@ -145,6 +155,7 @@ func PrintTasks(tasks []domain.Task, showAll bool) {
 		return
 	}
 
+	fmt.Println()
 	header := fmt.Sprintf("%-8s %-10s %-50s %-10s %-22s %-22s %-12s", "ID", "STATUS", "DESCRIPTION", "PRIORITY", "CREATED", "COMPLETED", "TOOK TIME")
 	fmt.Println(header)
 	fmt.Println(strings.Repeat("-", len(header)))
