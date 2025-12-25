@@ -6,19 +6,15 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
-	"time"
 
 	"github.com/pramudya3/task-cli/helper"
 )
 
 type Task struct {
-	Id          string        `json:"id"`
-	Description string        `json:"description"`
-	Priority    string        `json:"priority"`
-	Completed   bool          `json:"completed"`
-	CreatedAt   time.Time     `json:"created_at"`
-	CompletedAt time.Time     `json:"completed_at"`
-	TookTime    time.Duration `json:"took_time"`
+	Id          string `json:"id"`
+	Description string `json:"description"`
+	Priority    string `json:"priority"`
+	Completed   bool   `json:"completed"`
 }
 
 type TaskTracker struct {
@@ -75,7 +71,6 @@ func (tt *TaskTracker) Add(description, priority string) (*Task, error) {
 		Id:          helper.GenerateId(description),
 		Description: description,
 		Priority:    priority,
-		CreatedAt:   time.Now(),
 	}
 
 	tt.Tasks = append(tt.Tasks, task)
@@ -97,8 +92,6 @@ func (tt *TaskTracker) Complete(id string) error {
 		return fmt.Errorf("task not found: %s", id)
 	}
 	task.Completed = true
-	task.CompletedAt = time.Now()
-	task.TookTime = time.Since(task.CreatedAt)
 	return nil
 }
 
