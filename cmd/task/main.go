@@ -6,8 +6,8 @@ import (
 	"path/filepath"
 	"runtime/debug"
 	"strings"
-	"time"
 
+	"github.com/fatih/color"
 	"github.com/pramudya3/task-cli/domain"
 	"github.com/pramudya3/task-cli/helper"
 	"github.com/spf13/cobra"
@@ -156,9 +156,11 @@ func PrintTasks(tasks []domain.Task, showAll bool) {
 	}
 
 	fmt.Println()
-	header := fmt.Sprintf("%-8s %-10s %-50s %-10s %-22s %-22s %-12s", "ID", "STATUS", "DESCRIPTION", "PRIORITY", "CREATED", "COMPLETED", "TOOK TIME")
-	fmt.Println(header)
-	fmt.Println(strings.Repeat("-", len(header)))
+	bgColor := color.New(color.BgBlack)
+	header := fmt.Sprintf("%-8s %-50s %-10s %-10s", "ID", "DESCRIPTION", "PRIORITY", "STATUS")
+
+	bgColor.Println(header)
+	bgColor.Println(strings.Repeat("-", len(header)))
 
 	for _, t := range tasks {
 		if !showAll && t.Completed {
@@ -166,23 +168,19 @@ func PrintTasks(tasks []domain.Task, showAll bool) {
 		}
 
 		status := "PENDING"
-		completedAt := "-"
-		tookTime := "-"
 		if t.Completed {
 			status = "DONE"
-			completedAt = t.CompletedAt.Format("2006-01-02 15:04:05")
-			tookTime = t.TookTime.Truncate(time.Second).String()
 		}
 
-		fmt.Printf("%-8s %-10s %-50s %-10s %-22s %-22s %-12s\n",
-			t.Id,
-			status,
-			helper.Truncate(t.Description, 50),
-			strings.ToUpper(t.Priority),
-			t.CreatedAt.Format("2006-01-02 15:04:05"),
-			completedAt,
-			tookTime,
-		)
+		if status == "DONE" {
+			bgGreen := color.New(color.BgHiGreen)
+			bgGreen.Printf("%-8s %-50s %-10s %-10s", t.Id, helper.Truncate(t.Description, 50), strings.ToUpper(t.Priority), status)
+		} else {
+			bgColor.Printf("%-8s %-50s %-10s %-10s", t.Id, helper.Truncate(t.Description, 50), strings.ToUpper(t.Priority), status)
+		}
+
+		color.Unset()
+		fmt.Println()
 	}
 }
 
