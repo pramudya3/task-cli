@@ -173,7 +173,8 @@ func PrintTasks(tasks []domain.Task, showAll bool) {
 		}
 
 		if status == "DONE" {
-			bgGreen := color.New(color.BgHiGreen)
+			// darkGreen
+			bgGreen := color.New(color.BgGreen, color.FgBlack)
 			bgGreen.Printf("%-8s %-50s %-10s %-10s", t.Id, helper.Truncate(t.Description, 50), strings.ToUpper(t.Priority), status)
 		} else {
 			bgColor.Printf("%-8s %-50s %-10s %-10s", t.Id, helper.Truncate(t.Description, 50), strings.ToUpper(t.Priority), status)
